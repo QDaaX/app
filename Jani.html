@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>TODO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fir=no">
+    <link 
+        rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+        crossorigin="anonymous">
+    <script defer src="todo-app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            createTodoApp(document.getElementById('todo-app'), 'Дела Яны');
+        });
+    </script>
+  </head>
+  <body>
+    <div class="container mb-5">
+        <nav class="nav">
+            <a class="nav-link" href="index.html">Мои дела</a>
+            <a class="nav-link" href="Jani.html">Дела Яны</a>
+            <a class="nav-link" href="Charlie.html">Дела Чарли(говно)</a>
+        </nav>
+    </div>
+    <div id="todo-app" class="container"></div>
+  </body>
+</html>
