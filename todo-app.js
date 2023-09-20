@@ -1,12 +1,10 @@
 (function() {
-    // создаем и возвращаем заголовок приложения
     function createAppTitle(title) {
         let appTitle = document.createElement('h2');
         appTitle.innerHTML = title;
         return appTitle;
     }
 
-    // создаем и возвращаем форму для создания дела
     function createTodoItemForm() {
         let form = document.createElement('form');
         let input = document.createElement('input');
@@ -32,7 +30,6 @@
         };
     }
 
-    // создаем и возвращаем список элементов
     function createTodoList() {
         let list = document.createElement('ul');
         list.classList.add('list-group');
@@ -41,13 +38,10 @@
 
     function createTodoItem({name, done}) {
         let item = document.createElement('li');
-        // кнопки помещаем в элемент, который красиво покажет их в одной группе
         let buttonGroup = document.createElement('div');
         let doneButton = document.createElement('button');
         let deleteButton = document.createElement('button');
 
-        // устанавливаем стили для элемента списка, а также для размещения кнопок
-        // в его правой части с помощью flex
         item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
         item.textContent = arguments[0];
 
@@ -57,12 +51,10 @@
         deleteButton.classList.add('btn', 'btn-danger');
         deleteButton.textContent = 'Удалить';
 
-        // вкладываем кнопки в отдельный элемент, чтобы они объединились в один блок
         buttonGroup.append(doneButton);
         buttonGroup.append(deleteButton);
         item.append(buttonGroup);
 
-        // приложению нужен доступ к самому элементу и кнопкам, чтиобы обрабатывать события нажатия
         return {
             item,
             doneButton,
@@ -86,21 +78,17 @@
 
         todoItemForm.form.addEventListener('input', function() {
             todoItemForm.button.removeAttribute('disabled');
-        })
-        // браузер создаёт событие submit на форме по нажатию Enter или на кнопку создания дела
+        });
+
         todoItemForm.form.addEventListener('submit', function(e) {
-            // это строчка необходима, чтобы предотвратить стандартные действия браузера
-            // в данном случае мы не хотим, чтобы страница перезагружалась при отправке формы
             e.preventDefault();
             
-            // игнорируем создание элемента, если пользователь ничего не ввёл в поле
             if (!todoItemForm.input.value) {
                 return;
             }
             
             let todoItem = createTodoItem(todoItemForm.input.value);
             
-            // добавляем обработчики на кнопки
             todoItem.doneButton.addEventListener('click', function() {
                 todoItem.item.classList.toggle('list-group-item-success');
                 objArrayItem.done = true;
@@ -122,7 +110,6 @@
                 };
             });
 
-            // создаем и добавляем в список новое дело с названием из поля для ввода
             todoList.append(todoItem.item);
 
             
@@ -139,7 +126,6 @@
             objArray.push(objArrayItem);
             
             alert(Object.values(objArray));
-            // обнуляем значение в поле, чтобы не пришлось стирать вручную
             todoItemForm.input.value = '';
         });
     };
