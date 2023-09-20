@@ -125,7 +125,7 @@
             objArrayItem.done = false;
             objArray.push(objArrayItem);
             
-            alert(Object.values(objArray));
+            // alert(Object.values(objArray));
             todoItemForm.input.value = '';
         });
     };
