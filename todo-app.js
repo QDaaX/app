@@ -62,7 +62,36 @@
         };
         
     };
+
+    function addToArray(obj) {
+        let array = localStorage.getItem('arrayData');
+        
+        array = array ? JSON.parse(array) : [];
+        array.push(obj);
+        localStorage.setItem('arrayData', JSON.stringify(array));
+    }
     
+    function removeFromArray(id) {
+        let array = JSON.parse(localStorage.getItem('arrayData'));
+
+        let newArray = [];
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].id !== id) {
+                newArray.push(array[i]);
+            };
+        };
+        localStorage.setItem('arrayData', JSON.stringify(newArray));
+    }
+
+    function itemIdCount() {
+        let count = localStorage.getItem('itemIdCount');
+
+        if (!count) {
+            count = 0;
+        } else { count++ };
+        localStorage.setItem('itemIdCount', count);
+        return count;
+    }
     
     function createTodoApp(container, title = 'Список дел') {
         let todoAppTitle = createAppTitle(title);
@@ -73,8 +102,12 @@
         container.append(todoItemForm.form);
         container.append(todoList);
         
-        let objArray = [];
-        let count = 0;
+        let count;
+
+        function objId() {
+            count++;
+            return count;
+        };
 
         todoItemForm.form.addEventListener('input', function() {
             todoItemForm.button.removeAttribute('disabled');
@@ -90,44 +123,39 @@
             let todoItem = createTodoItem(todoItemForm.input.value);
             
             todoItem.doneButton.addEventListener('click', function() {
-                todoItem.item.classList.toggle('list-group-item-success');
-                objArrayItem.done = true;
-                for (let temp in objArray) {
-                    if (objArray[temp].id === objArrayItem.id) {
-                        objArray.splice(temp, 1, objArrayItem);
+                if (objArrayItem.done === false) {
+                    todoItem.item.classList.toggle('list-group-item-success');
+                    objArrayItem.done = true;
+                } else {
+                    todoItem.item.classList.toggle('list-group-item-success');
+                    objArrayItem.done = false;
+                };
+                let array = JSON.parse(localStorage.getItem('arrayData'));
+                for (let temp in array) {
+                    if (array[temp].id === objArrayItem.id) {
+                        array.splice(temp, 1, objArrayItem);
                     };
                 };
+                localStorage.setItem('arrayData', JSON.stringify(array));
             });
 
             todoItem.deleteButton.addEventListener('click', function() {
                 if (confirm('Вы уверены?')) {
+                    removeFromArray(objArrayItem.id);
                     todoItem.item.remove();
-                    for (let temp in objArray) {
-                        if (objArray[temp].id === objArrayItem.id) {
-                            objArray.splice(temp, 1);
-                        };
-                    };
                 };
             });
 
             todoList.append(todoItem.item);
-
-            
-            function objId() {
-                count++;
-                return count;
-            };
             
             objArrayItem = {
             };
-            objArrayItem.id = objId();
+            objArrayItem.id = itemIdCount();
             objArrayItem.name = todoItemForm.input.value; 
             objArrayItem.done = false;
-            objArray.push(objArrayItem);
+            addToArray(objArrayItem);
             
-            // alert(Object.values(objArray));
             todoItemForm.input.value = '';
-            localStorage.setItem('listItems', JSON.stringify(Object.values(objArray)));      
         });
     };
 
