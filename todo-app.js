@@ -127,6 +127,7 @@
             
             // alert(Object.values(objArray));
             todoItemForm.input.value = '';
+            localStorage.setItem('listItems', JSON.stringify(Object.values(objArray)));      
         });
     };
 
