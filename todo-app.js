@@ -64,16 +64,16 @@
         
     };
 
-    function addToArray(obj) {
-        let array = localStorage.getItem('arrayData');
+    function addToArray(obj, data) {
+        let array = localStorage.getItem(data);
         
         array = array ? JSON.parse(array) : [];
         array.push(obj);
-        localStorage.setItem('arrayData', JSON.stringify(array));
+        localStorage.setItem(data, JSON.stringify(array));
     }
     
-    function removeFromArray(id) {
-        let array = JSON.parse(localStorage.getItem('arrayData'));
+    function removeFromArray(id, data) {
+        let array = JSON.parse(localStorage.getItem(data));
 
         let newArray = [];
         for (let i = 0; i < array.length; i++) {
@@ -81,7 +81,7 @@
                 newArray.push(array[i]);
             };
         };
-        localStorage.setItem('arrayData', JSON.stringify(newArray));
+        localStorage.setItem(data, JSON.stringify(newArray));
     }
 
     function itemIdCount() {
@@ -94,7 +94,7 @@
         return count;
     }
     
-    function createTodoApp(container, title = 'Список дел') {
+    function createTodoApp(container, title = 'Список дел', dataTitle) {
         let todoAppTitle = createAppTitle(title);
         let todoItemForm = createTodoItemForm();
         let todoList = createTodoList();
@@ -119,7 +119,7 @@
             todoItem.doneButton.addEventListener('click', function(e) {
                 let target = e.target.parentNode.parentNode;
                 let elem = parseInt(target.id);
-                let targetArray = JSON.parse(localStorage.getItem('arrayData'));
+                let targetArray = JSON.parse(localStorage.getItem(dataTitle));
                 let targetObject = targetArray.find(targetArray => targetArray.id === elem);
                 
                 if (targetObject.done === false) {
@@ -135,7 +135,7 @@
                         targetArray.splice(i, 1, targetObject);
                     };
                 };
-                localStorage.setItem('arrayData', JSON.stringify(targetArray));
+                localStorage.setItem(dataTitle, JSON.stringify(targetArray));
             });
 
             todoItem.deleteButton.addEventListener('click', function(e) {
@@ -154,7 +154,7 @@
             objArrayItem.id = itemIdCount();
             objArrayItem.name = todoItemForm.input.value; 
             objArrayItem.done = false;
-            addToArray(objArrayItem);
+            addToArray(objArrayItem, dataTitle);
             
             todoItemForm.input.value = '';
         });
