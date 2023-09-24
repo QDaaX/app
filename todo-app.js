@@ -116,14 +116,19 @@
             
             let todoItem = createTodoItem(todoItemForm.input.value);
             
-            todoItem.doneButton.addEventListener('click', function() {
-                if (objArrayItem.done === false) {
-                    todoItem.item.classList.toggle('list-group-item-success');
-                    objArrayItem.done = true;
-                } else {
-                    todoItem.item.classList.toggle('list-group-item-success');
-                    objArrayItem.done = false;
-                };
+            todoItem.doneButton.addEventListener('click', function(e) {
+                let target = e.target.parentNode.parentNode;
+                let elem = parseInt(target.id);
+                alert(elem); // проверка типа id item'a
+                let tempObj = null;
+                // найти способ менять параметр done опираясь на target id
+                // if (objArrayItem.done === false) {
+                //     target.classList.toggle('list-group-item-success');
+                //     objArrayItem.done = true;
+                // } else {
+                //     target.item.classList.toggle('list-group-item-success');
+                //     objArrayItem.done = false;
+                // };
                 let array = JSON.parse(localStorage.getItem('arrayData'));
                 for (let temp in array) {
                     if (array[temp].id === objArrayItem.id) {
@@ -133,10 +138,12 @@
                 localStorage.setItem('arrayData', JSON.stringify(array));
             });
 
-            todoItem.deleteButton.addEventListener('click', function() {
+            todoItem.deleteButton.addEventListener('click', function(e) {
                 if (confirm('Вы уверены?')) {
-                    removeFromArray(objArrayItem.id);
-                    todoItem.item.remove();
+                    let target = e.target.parentNode.parentNode;
+                    let elem = parseInt(target.id);
+                    removeFromArray(elem);
+                    target.remove();
                 };
             });
 
