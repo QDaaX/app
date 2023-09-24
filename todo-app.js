@@ -43,6 +43,8 @@
         let deleteButton = document.createElement('button');
         item.id = JSON.parse(localStorage.getItem('itemIdCount')) + 1;
 
+        
+
         item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
         item.textContent = arguments[0];
 
@@ -93,7 +95,23 @@
         localStorage.setItem('itemIdCount', count);
         return count;
     }
+
+    // function dataLoad(cont, dataToLoad) {
+    //     let local = JSON.parse(localStorage.getItem(dataToLoad));
+    //     let todoList = createTodoList();
+    //     cont.append(todoList);
+    //     if (local) {
+    //         for (let i of local) {
+    //             let temp = createTodoItem(i.name);
+    //             todoList.append(temp.item);
+    //             alert('это работает!');
+    //         };
+    //         alert('это работает!');
+    //     } else { alert('не работает =(') };
+    // }
+    // КАК СУКА ДОБАВИТЬ ФУНКЦИОНАЛЬНЫе КНОПКИ С НОРМАЛЬНЫМ ОБРАБОТЧИКОМ????????
     
+
     function createTodoApp(container, title = 'Список дел', dataTitle) {
         let todoAppTitle = createAppTitle(title);
         let todoItemForm = createTodoItemForm();
@@ -102,6 +120,9 @@
         container.append(todoAppTitle);
         container.append(todoItemForm.form);
         container.append(todoList);
+
+        // прогруз
+        // dataLoad(container, dataTitle);
 
         todoItemForm.form.addEventListener('input', function() {
             todoItemForm.button.removeAttribute('disabled');
@@ -115,7 +136,7 @@
             }
             
             let todoItem = createTodoItem(todoItemForm.input.value);
-            
+
             todoItem.doneButton.addEventListener('click', function(e) {
                 let target = e.target.parentNode.parentNode;
                 let elem = parseInt(target.id);
