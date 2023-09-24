@@ -102,13 +102,6 @@
         container.append(todoAppTitle);
         container.append(todoItemForm.form);
         container.append(todoList);
-        
-        let count;
-
-        function objId() {
-            count++;
-            return count;
-        };
 
         todoItemForm.form.addEventListener('input', function() {
             todoItemForm.button.removeAttribute('disabled');
