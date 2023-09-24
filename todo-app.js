@@ -119,23 +119,23 @@
             todoItem.doneButton.addEventListener('click', function(e) {
                 let target = e.target.parentNode.parentNode;
                 let elem = parseInt(target.id);
-                alert(elem); // проверка типа id item'a
-                let tempObj = null;
-                // найти способ менять параметр done опираясь на target id
-                // if (objArrayItem.done === false) {
-                //     target.classList.toggle('list-group-item-success');
-                //     objArrayItem.done = true;
-                // } else {
-                //     target.item.classList.toggle('list-group-item-success');
-                //     objArrayItem.done = false;
-                // };
-                let array = JSON.parse(localStorage.getItem('arrayData'));
-                for (let temp in array) {
-                    if (array[temp].id === objArrayItem.id) {
-                        array.splice(temp, 1, objArrayItem);
+                let targetArray = JSON.parse(localStorage.getItem('arrayData'));
+                let targetObject = targetArray.find(targetArray => targetArray.id === elem);
+                
+                if (targetObject.done === false) {
+                    target.classList.toggle('list-group-item-success');
+                    targetObject.done = true;
+                } else {
+                    target.classList.toggle('list-group-item-success');
+                    targetObject.done = false;
+                };
+
+                for (let i in targetArray) {
+                    if (targetArray[i].id === targetObject.id) {
+                        targetArray.splice(i, 1, targetObject);
                     };
                 };
-                localStorage.setItem('arrayData', JSON.stringify(array));
+                localStorage.setItem('arrayData', JSON.stringify(targetArray));
             });
 
             todoItem.deleteButton.addEventListener('click', function(e) {
