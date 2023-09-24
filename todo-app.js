@@ -96,19 +96,19 @@
         return count;
     }
 
-    // function dataLoad(cont, dataToLoad) {
-    //     let local = JSON.parse(localStorage.getItem(dataToLoad));
-    //     let todoList = createTodoList();
-    //     cont.append(todoList);
-    //     if (local) {
-    //         for (let i of local) {
-    //             let temp = createTodoItem(i.name);
-    //             todoList.append(temp.item);
-    //             alert('это работает!');
-    //         };
-    //         alert('это работает!');
-    //     } else { alert('не работает =(') };
-    // }
+    function dataLoad(cont, dataToLoad) {
+        let local = JSON.parse(localStorage.getItem(dataToLoad));
+        let todoList = createTodoList();
+        cont.append(todoList);
+        if (local) {
+            for (let i of local) {
+                let temp = createTodoItem(i.name);
+                todoList.append(temp.item);
+                // alert('это работает!');
+            };
+            alert('это работает!');
+        } else { alert('не работает =(') };
+    }
     // КАК СУКА ДОБАВИТЬ ФУНКЦИОНАЛЬНЫе КНОПКИ С НОРМАЛЬНЫМ ОБРАБОТЧИКОМ????????
     
 
@@ -122,7 +122,7 @@
         container.append(todoList);
 
         // прогруз
-        // dataLoad(container, dataTitle);
+        dataLoad(container, dataTitle);
 
         todoItemForm.form.addEventListener('input', function() {
             todoItemForm.button.removeAttribute('disabled');
