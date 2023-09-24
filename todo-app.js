@@ -41,6 +41,7 @@
         let buttonGroup = document.createElement('div');
         let doneButton = document.createElement('button');
         let deleteButton = document.createElement('button');
+        item.id = JSON.parse(localStorage.getItem('itemIdCount')) + 1;
 
         item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
         item.textContent = arguments[0];
@@ -87,7 +88,7 @@
         let count = localStorage.getItem('itemIdCount');
 
         if (!count) {
-            count = 0;
+            count = 1;
         } else { count++ };
         localStorage.setItem('itemIdCount', count);
         return count;
