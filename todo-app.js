@@ -142,7 +142,7 @@
                 if (confirm('Вы уверены?')) {
                     let target = e.target.parentNode.parentNode;
                     let elem = parseInt(target.id);
-                    removeFromArray(elem);
+                    removeFromArray(elem, dataTitle);
                     target.remove();
                 };
             });
