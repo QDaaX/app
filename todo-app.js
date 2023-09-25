@@ -73,6 +73,36 @@
         array.push(obj);
         localStorage.setItem(data, JSON.stringify(array));
     }
+
+    function doneButtonFunc(e, dataTitle) {
+        let target = e.target.parentNode.parentNode;
+        let elem = parseInt(target.id);
+        let targetArray = JSON.parse(localStorage.getItem(dataTitle));
+        let targetObject = targetArray.find(targetArray => targetArray.id === elem);
+
+        if (targetObject.done === false) {
+            target.classList.toggle('list-group-item-success');
+            targetObject.done = true;
+        } else {
+            target.classList.toggle('list-group-item-success');
+            targetObject.done = false;
+        }
+        for (let i in targetArray) {
+            if (targetArray[i].id === targetObject.id) {
+                targetArray.splice(i, 1, targetObject);
+            };
+        };
+        localStorage.setItem(dataTitle, JSON.stringify(targetArray));
+    }
+
+    function delButtonFunc(e, dataTitle) {
+        if (confirm('Вы уверены?')) {
+            let target = e.target.parentNode.parentNode;
+            let elem = parseInt(target.id);
+            removeFromArray(elem, dataTitle);
+            target.remove();
+        };
+    }
     
     function removeFromArray(id, data) {
         let array = JSON.parse(localStorage.getItem(data));
@@ -96,18 +126,31 @@
         return count;
     }
 
-    function dataLoad(cont, dataToLoad) {
-        let local = JSON.parse(localStorage.getItem(dataToLoad));
+    function dataLoad(cont, dataTitle) {
+        let local = JSON.parse(localStorage.getItem(dataTitle));
         let todoList = createTodoList();
         cont.append(todoList);
         if (local) {
             for (let i of local) {
                 let temp = createTodoItem(i.name);
+                temp.item.id = i.id;
+
+                if (i.done === true) {
+                    temp.item.classList.toggle('list-group-item-success');
+                };
+
+                temp.doneButton.addEventListener('click', function(e) {
+                    doneButtonFunc(e, dataTitle);
+                });
+
+                temp.deleteButton.addEventListener('click', function(e) {
+                    delButtonFunc(e, dataTitle);
+                });
+
                 todoList.append(temp.item);
                 // alert('это работает!');
             };
-            alert('это работает!');
-        } else { alert('не работает =(') };
+        } else {return};
     }
     // КАК СУКА ДОБАВИТЬ ФУНКЦИОНАЛЬНЫе КНОПКИ С НОРМАЛЬНЫМ ОБРАБОТЧИКОМ????????
     
@@ -138,34 +181,11 @@
             let todoItem = createTodoItem(todoItemForm.input.value);
 
             todoItem.doneButton.addEventListener('click', function(e) {
-                let target = e.target.parentNode.parentNode;
-                let elem = parseInt(target.id);
-                let targetArray = JSON.parse(localStorage.getItem(dataTitle));
-                let targetObject = targetArray.find(targetArray => targetArray.id === elem);
-                
-                if (targetObject.done === false) {
-                    target.classList.toggle('list-group-item-success');
-                    targetObject.done = true;
-                } else {
-                    target.classList.toggle('list-group-item-success');
-                    targetObject.done = false;
-                };
-
-                for (let i in targetArray) {
-                    if (targetArray[i].id === targetObject.id) {
-                        targetArray.splice(i, 1, targetObject);
-                    };
-                };
-                localStorage.setItem(dataTitle, JSON.stringify(targetArray));
+                doneButtonFunc(e, dataTitle);
             });
 
             todoItem.deleteButton.addEventListener('click', function(e) {
-                if (confirm('Вы уверены?')) {
-                    let target = e.target.parentNode.parentNode;
-                    let elem = parseInt(target.id);
-                    removeFromArray(elem, dataTitle);
-                    target.remove();
-                };
+                delButtonFunc(e, dataTitle);
             });
 
             todoList.append(todoItem.item);
