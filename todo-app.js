@@ -148,11 +148,9 @@
                 });
 
                 todoList.append(temp.item);
-                // alert('это работает!');
             };
         } else {return};
     }
-    // КАК СУКА ДОБАВИТЬ ФУНКЦИОНАЛЬНЫе КНОПКИ С НОРМАЛЬНЫМ ОБРАБОТЧИКОМ????????
     
 
     function createTodoApp(container, title = 'Список дел', dataTitle) {
@@ -164,7 +162,6 @@
         container.append(todoItemForm.form);
         container.append(todoList);
 
-        // прогруз
         dataLoad(container, dataTitle);
 
         todoItemForm.form.addEventListener('input', function() {
